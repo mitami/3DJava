@@ -25,6 +25,7 @@ public class Display extends Canvas implements Runnable {
     private boolean running = false;
     private Render render;
     private int[] pixels;
+    private InputHandler
 
     public Display() {
         Dimension size = new Dimension(WIDTH, HEIGHT);
