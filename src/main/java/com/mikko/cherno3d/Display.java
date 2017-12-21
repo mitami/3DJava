@@ -2,6 +2,7 @@ package com.mikko.cherno3d;
 
 import com.mikko.cherno3d.graphics.Render;
 import com.mikko.cherno3d.graphics.Screen;
+import com.mikko.cherno3d.input.InputHandler;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -25,7 +26,7 @@ public class Display extends Canvas implements Runnable {
     private boolean running = false;
     private Render render;
     private int[] pixels;
-    private InputHandler
+    private InputHandler input;
 
     public Display() {
         Dimension size = new Dimension(WIDTH, HEIGHT);
@@ -36,6 +37,12 @@ public class Display extends Canvas implements Runnable {
         screen = new Screen(WIDTH, HEIGHT);
         img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
+        
+        input = new InputHandler();
+        addKeyListener(input);
+        addFocusListener(input);
+        addMouseListener(input);
+        addMouseMotionListener(input);
     }
 
     private void start() {
@@ -100,7 +107,7 @@ public class Display extends Canvas implements Runnable {
     }
 
     private void tick() {
-        game.tick();
+        game.tick(input.key);
     }
 
     /*

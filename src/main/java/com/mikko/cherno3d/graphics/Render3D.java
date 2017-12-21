@@ -9,13 +9,23 @@ public class Render3D extends Render {
     }
 
     public void floor(Game game) {
-
+        /*
+            The variables floorPosition and ceilingPosition can be used to make
+            the ceiling or floor appear to be higher or lower.
+        */
         double floorPosition = 8.0;
         double ceilingPosition = 8.0;
-        double forward = game.time / 5.0;
-        double right = game.time / 5.0;
+        double forward = game.controls.z;
+        double right = game.controls.x;
         
-        double rotation = 0;
+        double rotation = game.controls.rotation;
+        /*
+            The sine and cosine together are used to achieve a circular motion.
+            The sine and cosine wave are kind of the opposites, so when the sine
+            wave changes direction at the half circle, the cosine does the same
+            but in the opposite direction. So by using them both, we can make
+            a whole circle. (-- Google for more info on this --)
+        */
         double cosine = Math.cos(rotation);
         double sine = Math.sin(rotation);
 
@@ -31,10 +41,10 @@ public class Render3D extends Render {
             for (int x = 0; x < width; x++) {
                 double depth = (x - width / 2.0) / height;
                 depth *= z;
-                double xx = depth * cosine + z * sine + right;
-                double yy = z * cosine - depth * sine + forward;
-                int xPix = (int) (xx);
-                int yPix = (int) (yy);
+                double xx = depth * cosine + z * sine;
+                double yy = z * cosine - depth * sine;
+                int xPix = (int) (xx + right);
+                int yPix = (int) (yy + forward);
                 pixels[x + y * width] = ((xPix & 15) * 16) | ((yPix & 15) * 16) << 8;
             }
         }
