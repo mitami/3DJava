@@ -46,7 +46,7 @@ public class Screen extends Render {
             
         }
         
-        renderer.floor();
+        renderer.floor(game);
         draw(renderer, 0, 0);
     }
 
