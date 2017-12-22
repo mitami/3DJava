@@ -3,6 +3,11 @@ package com.mikko.cherno3d.input;
 public class Controller {
 
     public double x, z, rotation, xa, za, rotationa;
+    /*
+        Again we are using static booleans so we can use and change their values
+        in the "Display.java" class' "run()" method, without creating a new
+        instance of this class, to implement movement of the camera with the mouse.
+    */
     public static boolean turnLeft = false;
     public static boolean turnRight = false;
 

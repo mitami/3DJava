@@ -16,6 +16,12 @@ public class InputHandler implements KeyListener, FocusListener, MouseListener, 
         "keyReleased()"
     */
     public boolean[] key = new boolean[68836];
+    /*
+        The integers below are made "static" so we can easily access them in other
+        classes that work on the movement. This enables the using of these variables
+        without creating a new instance of this class. (See Display.java and the
+        method "run()" where these are used.)
+    */
     public static int mouseX;
     public static int mouseY;
 

@@ -111,6 +111,12 @@ public class Display extends Canvas implements Runnable {
             }
             render();
             
+            /*
+                These if statements check the position of the mouse and change
+                the boolean values in the class Controller.java accordingly to
+                initiate and stop rotating the camera. These are in the run()
+                method inside a while loop so all this is checked on each frame.
+            */
             newX = InputHandler.mouseX;
             if(newX > oldX) {
                 Controller.turnRight = true;
@@ -156,6 +162,7 @@ public class Display extends Canvas implements Runnable {
     }
 
     public static void main(String[] args) {
+        //We are making a new cursor that is invisible and replacing the default one with it.
         BufferedImage cursor = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
         Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(cursor, new Point(0,0), "blank");
         Display game = new Display();
