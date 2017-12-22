@@ -5,8 +5,10 @@ import com.mikko.cherno3d.graphics.Screen;
 import com.mikko.cherno3d.input.Controller;
 import com.mikko.cherno3d.input.InputHandler;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -35,6 +37,7 @@ public class Display extends Canvas implements Runnable {
     private int newY = 0;
     private int oldX = 0;
     private int oldY = 0;
+    private int fps = 0;
 
     public Display() {
         Dimension size = new Dimension(WIDTH, HEIGHT);
@@ -101,7 +104,7 @@ public class Display extends Canvas implements Runnable {
                 ticked = true;
                 tickCount++;
                 if (tickCount % 60 == 0) {
-                    System.out.println(frames + "FPS");
+                    fps = frames;
                     previousTime += 1000;
                     frames = 0;
                 }
@@ -156,6 +159,9 @@ public class Display extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
         g.drawImage(img, 0, 0, WIDTH, HEIGHT, null);
+        g.setFont(new Font("Verdana", 0, 30));
+        g.setColor(Color.YELLOW);
+        g.drawString(fps + "FPS", 5, 22);
         g.dispose();
 
         bs.show();
