@@ -3,8 +3,10 @@ package com.mikko.cherno3d.input;
 public class Controller {
 
     public double x, z, rotation, xa, za, rotationa;
+    public static boolean turnLeft = false;
+    public static boolean turnRight = false;
 
-    public void tick(boolean forward, boolean back, boolean left, boolean right, boolean turnLeft, boolean turnRight) {
+    public void tick(boolean forward, boolean back, boolean left, boolean right) {
         double rotationSpeed = 0.025;
         double walkSpeed = 1.0;
         double xMove = 0.0;

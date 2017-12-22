@@ -4,8 +4,12 @@ import com.mikko.cherno3d.Game;
 
 public class Render3D extends Render {
 
+    public double[] zBuffer;
+    private double renderDistance = 5000.0;
+    
     public Render3D(int width, int height) {
         super(width, height);
+        zBuffer = new double[width * height];
     }
 
     public void floor(Game game) {
@@ -45,8 +49,53 @@ public class Render3D extends Render {
                 double yy = z * cosine - depth * sine;
                 int xPix = (int) (xx + right);
                 int yPix = (int) (yy + forward);
+                zBuffer[x + y * width] = z;
                 pixels[x + y * width] = ((xPix & 15) * 16) | ((yPix & 15) * 16) << 8;
+                
+                /*
+                    This if statement is used to give limits to where to stop rendering.
+                    It can be used with the z (depth), x (width) and y (height)
+                    variables. You can easily see what it does by changing the
+                    values in the if() check. Basically used with the z variable
+                    to limit the rendering distance.
+                */
+                if(z > 500) {
+                    pixels[x+y*width] = 0;
+                }
+                
             }
+        }
+    }
+    
+    /*
+        This method gradually darkens the pixels the further down the distance they are,
+        so that when the render distance limit is reached and the black pixels
+        start, the transition will appear more subtle instead of just changing
+        from full coloured pixels to entirely black ones like in the if statement
+        above.
+    */
+    public void renderDistanceLimiter() {
+        for (int i = 0; i < width * height; i++) {
+            int colour = pixels[i];
+            int brightness = (int) (renderDistance / (zBuffer[i]));
+            
+            if (brightness < 0) {
+                brightness = 0;
+            }
+            
+            if(brightness > 255) {
+                brightness = 255;
+            }
+            
+            int r = (colour >> 16) & 0xff;
+            int g = (colour >> 8) & 0xff;
+            int b = (colour) & 0xff;
+            
+            r = r * brightness / 255;
+            g = g * brightness / 255;
+            b = b * brightness / 255;
+            
+            pixels[i] = r << 16 | g << 8 | b;
         }
     }
 }

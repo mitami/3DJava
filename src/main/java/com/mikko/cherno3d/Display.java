@@ -2,10 +2,14 @@ package com.mikko.cherno3d;
 
 import com.mikko.cherno3d.graphics.Render;
 import com.mikko.cherno3d.graphics.Screen;
+import com.mikko.cherno3d.input.Controller;
 import com.mikko.cherno3d.input.InputHandler;
 import java.awt.Canvas;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -27,6 +31,10 @@ public class Display extends Canvas implements Runnable {
     private Render render;
     private int[] pixels;
     private InputHandler input;
+    private int newX = 0;
+    private int newY = 0;
+    private int oldX = 0;
+    private int oldY = 0;
 
     public Display() {
         Dimension size = new Dimension(WIDTH, HEIGHT);
@@ -102,6 +110,19 @@ public class Display extends Canvas implements Runnable {
                 frames++;
             }
             render();
+            
+            newX = InputHandler.mouseX;
+            if(newX > oldX) {
+                Controller.turnRight = true;
+            }
+            if(newX < oldX) {
+                Controller.turnLeft = true;
+            }
+            if(newX == oldX) {
+                Controller.turnLeft = false;
+                Controller.turnRight = false;
+            }
+            oldX = newX;
 
         }
     }
@@ -135,10 +156,13 @@ public class Display extends Canvas implements Runnable {
     }
 
     public static void main(String[] args) {
+        BufferedImage cursor = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(cursor, new Point(0,0), "blank");
         Display game = new Display();
         JFrame frame = new JFrame();
         frame.add(game);
         frame.setResizable(false);
+        frame.getContentPane().setCursor(blank);
         frame.pack();
         frame.setTitle(TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
