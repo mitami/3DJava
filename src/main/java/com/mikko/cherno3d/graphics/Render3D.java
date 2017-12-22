@@ -18,7 +18,11 @@ public class Render3D extends Render {
             the ceiling or floor appear to be higher or lower.
         */
         double floorPosition = 8.0;
-        double ceilingPosition = 8.0;
+        /*
+            If we change the ceilingPosition variable to a big enough value, the
+            renderDistanceLimiter() method will cut it out altogether.
+        */
+        double ceilingPosition = 800;
         double forward = game.controls.z;
         double right = game.controls.x;
         
