@@ -46,6 +46,7 @@ public class Controller {
         if (crouch) {
             y -= crouchHeight;
             sprint = false;
+            walkSpeed = 0.25;
         }
 
         if (sprint) {
