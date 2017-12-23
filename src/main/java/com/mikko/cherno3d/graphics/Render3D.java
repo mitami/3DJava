@@ -1,6 +1,7 @@
 package com.mikko.cherno3d.graphics;
 
 import com.mikko.cherno3d.Game;
+import com.mikko.cherno3d.input.Controller;
 
 public class Render3D extends Render {
 
@@ -25,6 +26,8 @@ public class Render3D extends Render {
         double ceilingPosition = 800;
         double forward = game.controls.z;
         double right = game.controls.x;
+        double up = game.controls.y;
+        double walking = Math.sin(game.time / 6.0) * 0.5;
         
         double rotation = game.controls.rotation;
         /*
@@ -40,10 +43,16 @@ public class Render3D extends Render {
         for (int y = 0; y < height; y++) {
             double ceiling = (y - height / 2.0) / height;
 
-            double z = floorPosition / ceiling;
+            double z = (floorPosition + up) / ceiling;
+            if(Controller.walk) {
+                z = (floorPosition + up + walking) / ceiling;
+            }
 
             if (ceiling < 0) {
-                z = ceilingPosition / -ceiling;
+                z = (ceilingPosition - up) / -ceiling;
+                if(Controller.walk) {
+                    z = (ceilingPosition - up - walking) / -ceiling;
+                }
             }
 
             for (int x = 0; x < width; x++) {
@@ -69,7 +78,9 @@ public class Render3D extends Render {
                 
             }
         }
+        Controller.walk = false;
     }
+    
     
     /*
         This method gradually darkens the pixels the further down the distance they are,
