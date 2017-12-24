@@ -43,11 +43,7 @@ public class Controller {
             rotationa += rotationSpeed;
         }
 
-        if (crouch) {
-            y -= crouchHeight;
-            sprint = false;
-            walkSpeed = 0.25;
-        }
+        
 
         if (sprint) {
             walkSpeed = 1;
@@ -55,8 +51,16 @@ public class Controller {
         if (jump) {
             y += jumpHeight;
             sprint = false;
+            walkSpeed = 0.5;
             walk = false;
         }
+        
+        if (crouch) {
+            y -= crouchHeight;
+            //sprint = false;
+            walkSpeed = 0.25;
+        }
+        
         xa += (xMove * Math.cos(rotation) + zMove * Math.sin(rotation)) * walkSpeed;
         za += (zMove * Math.cos(rotation) - xMove * Math.sin(rotation)) * walkSpeed;
 
