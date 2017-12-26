@@ -8,6 +8,7 @@ public class Render3D extends Render {
 
     public double[] zBuffer;
     private double renderDistance = 5000.0;
+    private double forwardGlobal;
     
 
     public Render3D(int width, int height) {
@@ -27,6 +28,7 @@ public class Render3D extends Render {
          */
         double ceilingPosition = 8.0;
         double forward = game.controls.z;
+        forwardGlobal = forward;
         double right = game.controls.x;
         double up = game.controls.y;
         /*
@@ -88,16 +90,20 @@ public class Render3D extends Render {
         Controller.walk = false;
 
         /*
-            Here we are creating (rendering) additional objects on the screen
+            Here in "walls()" we are creating (rendering) additional objects on the screen
             (things other than the ceiling or floor)
-            ---Why does the Random work differently when placed here, instead
-            of the top of the class??---
+            
         */
+        
+
+    }
+    
+    public void walls() {
         Random random = new Random(100);
         for (int i = 0; i < 10000; i++) {
             double xx = random.nextDouble();
             double yy = random.nextDouble();
-            double zz = 1.5 - forward / 16;
+            double zz = 1.5 - forwardGlobal / 16;
 
             int xPixel = (int) (xx / zz * height / 2 + width / 2);
             int yPixel = (int) (yy / zz * height / 2 + height / 2);
@@ -113,7 +119,7 @@ public class Render3D extends Render {
         for (int i = 0; i < 10000; i++) {
             double xx = random.nextDouble() - 1;
             double yy = random.nextDouble();
-            double zz = 1.5 - forward / 16;
+            double zz = 1.5 - forwardGlobal / 16;
         
             int xPixel = (int) (xx / zz * height / 2 + width / 2);
             int yPixel = (int) (yy / zz * height / 2 + height / 2);
@@ -129,7 +135,6 @@ public class Render3D extends Render {
                 pixels[xPixel + yPixel * width] = 0xfffff;
             }
         }
-
     }
 
     /*
