@@ -19,6 +19,7 @@ public class Controller {
         double crouchHeight = 0.3;
         double xMove = 0.0;
         double zMove = 0.0;
+        walk = false;
 
         if (forward) {
             zMove++;
