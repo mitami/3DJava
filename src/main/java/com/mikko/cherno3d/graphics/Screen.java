@@ -47,8 +47,9 @@ public class Screen extends Render {
         }
         
         renderer.floor(game);
+        renderer.renderWall(0, 0.5, 2, 0);
         renderer.renderDistanceLimiter();
-        renderer.walls();
+        
         draw(renderer, 0, 0);
     }
 
