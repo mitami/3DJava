@@ -1,5 +1,7 @@
 package com.mikko.cherno3d.input;
 
+import com.mikko.cherno3d.Display;
+
 public class Controller {
 
     public double x, y, z, rotation, xa, za, rotationa;
@@ -13,7 +15,7 @@ public class Controller {
     public static boolean walk = false;
 
     public void tick(boolean forward, boolean back, boolean left, boolean right, boolean jump, boolean crouch, boolean sprint) {
-        double rotationSpeed = 0.025;
+        double rotationSpeed = 0.0025 * Display.mouseSpeed;
         double walkSpeed = 0.5;
         double jumpHeight = 0.5;
         double crouchHeight = 0.3;
@@ -61,6 +63,8 @@ public class Controller {
             //sprint = false;
             walkSpeed = 0.25;
         }
+        
+        
         
         xa += (xMove * Math.cos(rotation) + zMove * Math.sin(rotation)) * walkSpeed;
         za += (zMove * Math.cos(rotation) - xMove * Math.sin(rotation)) * walkSpeed;

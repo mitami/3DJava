@@ -180,7 +180,8 @@ public class Render3D extends Render {
             for (int y = yPixelTopInt; y < yPixelBottomInt; y++) {
                 double pixelRotationY = (y - yPixelTop) / (yPixelBottom - yPixelTop);
                 int yTexture = (int) (8 * pixelRotationY);
-                pixels[x + y * width] = xTexture * 100 + yTexture * 100 * 200;
+                pixels[x + y * width] = Texture.floor.pixels[(xTexture & 7) + (yTexture & 7) * 8];
+                //pixels[x + y * width] = xTexture * 100 + yTexture * 100 * 200;
                 zBuffer[x + y * width] = 1 / (tex1 + (tex2 - tex1) * pixelRotation) * 8;
             }
         }
